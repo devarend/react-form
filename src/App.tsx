@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import TextInput from "./components/TextInput";
 
-function App() {
+const fieldValues = [
+  {
+    id: 1,
+    fields: [
+      {
+        name: "first_name",
+        value: "John",
+        type: "text",
+      },
+      {
+        name: "last_name",
+        value: "Doe",
+        type: "text",
+      },
+    ],
+  },
+];
+
+const App = () => {
+  const [values, setValues] = useState(fieldValues);
+
+  const onChange = (value: string, fieldIndex: number, index: number) => {
+    const newValues = [...values];
+    const currentItem = newValues[index].fields[fieldIndex];
+    currentItem.value = value;
+    setValues(newValues);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {values.map(({ id, fields }, index) =>
+          fields.map(({ name, value }, fieldIndex) => (
+            <TextInput
+              name={name}
+              value={value}
+              onChange={(event) =>
+                onChange(event.target.value, fieldIndex, index)
+              }
+            />
+          ))
+        )}
       </header>
     </div>
   );
-}
+};
 
 export default App;
