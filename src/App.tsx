@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
 import TextInput from "./components/TextInput";
+import { FieldValue } from "./types";
 
-const fieldValues = [
+const fieldValues: FieldValue[] = [
   {
     id: 1,
     fields: [
@@ -27,6 +28,11 @@ const App = () => {
     const newValues = [...values];
     const currentItem = newValues[index].fields[fieldIndex];
     currentItem.value = value;
+
+    if (!("edited" in currentItem)) {
+      currentItem.edited = true;
+    }
+
     setValues(newValues);
   };
 
@@ -44,6 +50,9 @@ const App = () => {
             />
           ))
         )}
+        <button type="button" onClick={() => console.log(values)}>
+          Send
+        </button>
       </header>
     </div>
   );
