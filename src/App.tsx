@@ -45,17 +45,20 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <h1>React form</h1>
+      <header className="Form">
         {values.map(({ id, fields }, index) =>
           fields.map(({ name, value }, fieldIndex) => (
-            <TextInput
-              key={`field-${index}-${fieldIndex}`}
-              name={name}
-              value={value}
-              fieldIndex={fieldIndex}
-              index={index}
-              onChange={onChange}
-            />
+            <div className="Form-Input">
+              <TextInput
+                key={`field-${index}-${fieldIndex}`}
+                name={name}
+                value={value}
+                fieldIndex={fieldIndex}
+                index={index}
+                onChange={onChange}
+              />
+            </div>
           ))
         )}
         <button type="button" onClick={onSubmit}>
