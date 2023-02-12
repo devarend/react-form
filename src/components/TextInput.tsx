@@ -1,27 +1,31 @@
-import { ChangeEventHandler, FC } from "react";
+import { FC, memo } from "react";
 
-const TextInput: FC<TextInputProps> = ({
-  label,
-  placeholder,
-  name,
-  value,
-  error,
-  style,
-  onChange,
-}) => {
-  return (
-    <>
-      {label && <label htmlFor={name}>{label}</label>}
-      <input
-        placeholder={placeholder}
-        value={value}
-        name={name}
-        style={style}
-        onChange={onChange}
-      />
-    </>
-  );
-};
+const TextInput: FC<TextInputProps> = memo(
+  ({
+    label,
+    placeholder,
+    name,
+    value,
+    error,
+    style,
+    onChange,
+    fieldIndex,
+    index,
+  }) => {
+    return (
+      <>
+        {label && <label htmlFor={name}>{label}</label>}
+        <input
+          placeholder={placeholder}
+          value={value}
+          name={name}
+          style={style}
+          onChange={(event) => onChange(event.target.value, fieldIndex, index)}
+        />
+      </>
+    );
+  }
+);
 
 interface TextInputProps {
   label?: string;
@@ -30,7 +34,10 @@ interface TextInputProps {
   value: string;
   error?: string;
   style?: object;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  fieldIndex: number;
+  index: number;
+
+  onChange(value: string, fieldIndex: number, index: number): void;
 }
 
 export default TextInput;
